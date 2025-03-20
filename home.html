@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - ADSphere</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+        header { background: #333; color: #fff; padding: 20px 0; }
+        header img { width: 50px; vertical-align: middle; margin-right: 10px; }
+        nav ul { list-style: none; padding: 0; }
+        nav ul li { display: inline; margin: 0 15px; }
+        nav ul li a { color: white; text-decoration: none; font-size: 18px; }
+        section { padding: 20px; margin: 20px 0; }
+        footer { text-align: center; padding: 10px; background-color: #333; color: #fff; }
+
+        /* Chatbot styles */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+        }
+        .chatbot-text {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            font-size: 12px;
+            color: gray;
+        }
+        .chatbot-box {
+            position: fixed;
+            bottom: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            width: 320px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .chatbot-box.show {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+        .chat-header {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .chat-body {
+            height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            text-align: left;
+        }
+        .chat-suggestion {
+            display: inline-block;
+            background: #eee;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .chat-suggestion:hover {
+            background: #ddd;
+            transform: scale(1.05);
+        }
+        #chat-input {
+            width: 75%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #send-btn {
+            width: 20%;
+            padding: 8px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Hi, <span id="usernamePlaceholder"></span></h1>
+            <h2>Welcome to ADSphere <img src="photo_2025-03-18_23-55-19.jpg" alt="ADsphere Logo"> </h2>
+            <nav>
+                <ul>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="services">
+        <h2>Our Services</h2>       
+        <div class="service">
+            <h3>Social Media Marketing</h3>
+            <p>We specialize in social media marketing, brand awareness, and business growth.</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About ADSphere</h2>
+        <p>At ADSphere, we focus on delivering customized marketing solutions that drive results.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 ADSphere. All rights reserved.</p>
+    </footer>
+
+    <!-- Chatbot Icon -->
+    <div class="chatbot-icon" onclick="toggleChat()">
+        💬
+    </div>
+    <div class="chatbot-text">ASAP here chatbot</div>
+
+    <!-- Chatbot Box -->
+    <div id="chatbot" class="chatbot-box">
+        <div class="chat-header">ADSphere Chatbot ❌</div>
+        <div class="chat-body" id="chat-body">
+            <p>Welcome! How can I assist you?</p>
+            <div>
+                <span class="chat-suggestion" onclick="selectSuggestion(this)">What services do you offer?</span>
+                <span class="chat-suggestion" onclick="selectSuggestion(this)">How can I contact support?</span>
+                <span class="chat-suggestion" onclick="selectSuggestion(this)">What are your prices?</span>
+            </div>
+        </div>
+        <input type="text" id="chat-input" placeholder="Type your message...">
+        <button id="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function toggleChat() {
+            const chatbot = document.getElementById("chatbot");
+            if (chatbot.classList.contains("show")) {
+                chatbot.classList.remove("show");
+            } else {
+                chatbot.classList.add("show");
+            }
+        }
+
+        function sendMessage() {
+            const inputField = document.getElementById("chat-input");
+            const chatBody = document.getElementById("chat-body");
+            let userMessage = inputField.value.trim();
+
+            if (userMessage === "") return;
+            
+            chatBody.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+            inputField.value = "";
+
+            setTimeout(() => {
+                let botReply = "Sorry, I didn't understand.";
+                if (userMessage.toLowerCase().includes("services")) {
+                    botReply = "We offer social media marketing and brand awareness services.";
+                } else if (userMessage.toLowerCase().includes("support")) {
+                    botReply = "You can contact support via email at support@adsphere.com.";
+                } else if (userMessage.toLowerCase().includes("prices")) {
+                    botReply = "Our pricing varies based on your needs. Contact us for a quote.";
+                } else {
+                    botReply = "I’m not sure about that. Please send us an email at support@adsphere.com.";
+                }
+
+                chatBody.innerHTML += `<p><strong>Chatbot:</strong> ${botReply}</p>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+
+        function selectSuggestion(element) {
+            document.getElementById("chat-input").value = element.innerText;
+            sendMessage();
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+        document.getElementById("usernamePlaceholder").textContent = username;
+    </script>
+</body>
+</html>
