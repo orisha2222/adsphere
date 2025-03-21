@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - ADSphere</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <span id="theme-toggle">🌙</span>
+        <h1>My Profile</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="profile-container">
+            <img src="profile-pic.png" alt="Profile Picture" class="profile-pic">
+            <h2 id="username">John Doe</h2>
+            <p>Email: <span id="user-email">johndoe@example.com</span></p>
+            <button onclick="editProfile()">Edit Profile</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 ADSphere. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function editProfile() {
+            let newName = prompt("Enter your new username:");
+            if (newName) {
+                document.getElementById("username").innerText = newName;
+            }
+        }
+    </script>
+
+</body>
+</html>

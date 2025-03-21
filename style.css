@@ -1,0 +1,31 @@
+:root {
+    --bg-color: #fff;
+    --text-color: #000;
+}
+
+.dark-mode {
+    --bg-color: #121212;
+    --text-color: #fff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+header {
+    background: #333;
+    color: white;
+    padding: 20px 0;
+    position: relative;
+}
+
+#theme-toggle {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    cursor: pointer;
+    font-size: 20px;
+}
